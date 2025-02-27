@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+	<Properties>
+		<Property name="LOG_PATTERN">[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t]
+			%c{1} - %msg%n</Property>
+		<Property name="LOG_ROOT">./services/dev/kafka/logs</Property>
+		<Property name="POD_NAME">${env:POD_NAME}</Property>
+	</Properties>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+
+		<RollingFile name="fileAudit">
+			<FileName>${LOG_ROOT}/kafka-audit-${POD_NAME}.log</FileName>
+			<FilePattern>${LOG_ROOT}/kafka-audit.%d{yyyy-MM-dd}.${POD_NAME}.%i.log
+			</FilePattern>
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${LOG_ROOT}/" maxDepth="3">
+					<IfFileName regex=".*audit.*-.*log" />
+					<IfLastModified age="30d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+		<RollingFile name="fileError">
+			<FileName>${LOG_ROOT}/kafka-error-${POD_NAME}.log</FileName>
+			<FilePattern>${LOG_ROOT}/errors/kafka-error.%d{yyyy-MM-dd}.${POD_NAME}.%i.log
+			</FilePattern>
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${LOG_ROOT}" maxDepth="3">
+					<IfFileName regex=".*error.*-.*log" />
+					<IfLastModified age="30d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+
+	</Appenders>
+	<Loggers>
+		<Logger name="org.hibernate.SQL" level="info"
+			additivity="false">
+			<AppenderRef ref="fileAudit" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.hibernate.type" level="info"
+			additivity="false">
+			<AppenderRef ref="fileAudit" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.hibernate.type.descriptor.sql.BasicBinder"
+			level="warn" additivity="false">
+			<AppenderRef ref="fileAudit" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.boot" level="debug"
+			additivity="false">
+			<AppenderRef ref="fileAudit" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Logger name="org.springframework.core" level="debug"
+			additivity="false">
+			<AppenderRef ref="fileAudit" />
+			<AppenderRef ref="console" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="fileError" level="error" />
+			<AppenderRef ref="fileAudit" />
+		</Root>
+	</Loggers>
+</Configuration>
