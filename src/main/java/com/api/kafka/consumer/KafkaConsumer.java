@@ -26,7 +26,7 @@ public class KafkaConsumer {
     @Autowired
     private Environment env;
 
-    @KafkaListener(topics = "interclub", groupId = "group-interclub", containerFactory = "kafkaListenerContainerFactory", properties = {
+    @KafkaListener(topics = "topic", groupId = "group-id", containerFactory = "kafkaListenerContainerFactory", properties = {
 	    "spring.json.value.default.type=com.api.kafka.domain.InterClubRequestDTO" })
     public void consume(InterClubRequestDTO request, Acknowledgment acknowledgment,
 	    @Header(KafkaHeaders.RECEIVED_PARTITION) int partition) throws InterruptedException {
@@ -37,8 +37,8 @@ public class KafkaConsumer {
 	    headers.set("X-DB-Env", request.getHeaders().getBbddKey());
 	    headers.set("x-api-key", request.getHeaders().getXApiKey());
 	    headers.set("Authorization", request.getHeaders().getToken());
-	    String url = env.getProperty("insurances.gateway.url") + env.getProperty("insurances.controller.endpoint")
-		    + env.getProperty("insurances.receipt.interclub.endpoint");
+	    String url = env.getProperty("gateway.url") + env.getProperty("controller.endpoint")
+		    + env.getProperty("endpoint");
 	    HttpEntity<InterClubPricingDTO> entity = new HttpEntity<InterClubPricingDTO>(request.getRequest(), headers);
 	    ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.POST, entity, Class.class);
 	    if (response.getStatusCode().equals(HttpStatus.OK)) {
