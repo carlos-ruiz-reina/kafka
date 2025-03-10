@@ -88,10 +88,8 @@
 				<tag.deploy>dev</tag.deploy>
 				<container.name>kafka-container</container.name>
 				<docker.repository>
-					fra.ocir.io/intermundial/intermundial/dev/kafka</docker.repository>
+					repositorio/dev/kafka</docker.repository>
 				<docker.expose.port>8095</docker.expose.port>
-				<jenkins.url>https://jenkins-dev.intermundial.com:8080/job</jenkins.url>
-				<jenkins.token>11c35ae5c3671511f20d9e2076c9fd3bc3</jenkins.token>
 				<deploy.name>api-kafka-dev</deploy.name>
 			</properties>
 		</profile>
@@ -103,10 +101,8 @@
 				<tag.deploy>pre</tag.deploy>
 				<container.name>kafka-container</container.name>
 				<docker.repository>
-					fra.ocir.io/intermundial/intermundial/pre/kafka</docker.repository>
+					repositorio/pre/kafka</docker.repository>
 				<docker.expose.port>8095</docker.expose.port>
-				<jenkins.url>https://jenkins-dev.intermundial.com:8080/job</jenkins.url>
-				<jenkins.token>11c35ae5c3671511f20d9e2076c9fd3bc3</jenkins.token>
 				<deploy.name>api-kafka-pre</deploy.name>
 			</properties>
 		</profile>
@@ -118,10 +114,8 @@
 				<tag.deploy>prod</tag.deploy>
 				<container.name>kafka-container</container.name>
 				<docker.repository>
-					fra.ocir.io/intermundial/intermundial/prod/kafka</docker.repository>
+					repositorio/prod/kafka</docker.repository>
 				<docker.expose.port>8095</docker.expose.port>
-				<jenkins.url>https://jenkins-pro.intermundial.com:8080/job</jenkins.url>
-				<jenkins.token>11eb6e409547d201bcfb83a5df51c36ff0</jenkins.token>
 				<deploy.name>api-kafka-prod</deploy.name>
 			</properties>
 		</profile>
