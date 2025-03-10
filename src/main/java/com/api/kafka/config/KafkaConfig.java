@@ -24,7 +24,7 @@ public class KafkaConfig {
     public ConsumerFactory<String, InterClubRequestDTO> consumerFactory() {
 	Map<String, Object> props = new HashMap<>();
 	props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka-cluster-kafka-bootstrap:9092");
-	props.put(ConsumerConfig.GROUP_ID_CONFIG, "group-interclub");
+	props.put(ConsumerConfig.GROUP_ID_CONFIG, "group-id");
 	props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 	props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
 	props.put(JsonDeserializer.TRUSTED_PACKAGES, "com.api.kafka.domain");
